@@ -1,0 +1,11 @@
+[auth]
+username = ""
+password = ""
+
+[provider.vps8]
+username = "***"
+password = "***"
+
+[provider.dnshe]
+apiKey = "***"
+apiSecret = "***"

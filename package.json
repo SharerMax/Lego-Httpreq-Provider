@@ -1,8 +1,8 @@
 {
-  "name": "tsdown-starter",
+  "name": "lego-httpreq-provider",
   "type": "module",
-  "version": "0.0.0",
-  "description": "A starter for creating a TypeScript package.",
+  "version": "0.0.1",
+  "description": "An httpreq DNS Provider of Lego ACME client",
   "author": "Author Name <author.name@mail.com>",
   "license": "MIT",
   "homepage": "https://github.com/author/library#readme",
@@ -20,9 +20,12 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=22.21.0"
+  },
   "scripts": {
     "build": "tsdown",
-    "dev": "tsdown --watch --onSuccess \"node --env-file .env.local ./dist/index.mjs\"",
+    "dev": "tsdown --watch --onSuccess \"node --env-file-if-existsfile .env.local ./dist/index.mjs\"",
     "start": "node ./dist/index.mjs",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
@@ -32,7 +35,7 @@
   "dependencies": {
     "@hono/node-server": "^2.0.3",
     "cac": "^7.0.0",
-    "hono": "^4.12.19",
+    "hono": "^4.12.22",
     "obug": "^2.1.1",
     "smol-toml": "^1.6.1"
   },
@@ -44,6 +47,6 @@
     "eslint": "^10.4.0",
     "tsdown": "^0.22.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   }
 }

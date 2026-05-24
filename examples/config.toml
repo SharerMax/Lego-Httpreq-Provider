@@ -1,6 +1,10 @@
-[auth]
-username = ""
-password = ""
+[server]
+port = 3000
+bind = "0.0.0.0"
+
+[server.auth]
+username = "user"
+password = "password"
 
 [provider.vps8]
 username = "***"

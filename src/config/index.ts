@@ -5,9 +5,13 @@ import logger from '@/log'
 const configLogger = logger.extend('config')
 
 const defaultConfig = {
-  auth: {
-    username: '',
-    password: '',
+  server: {
+    port: 3000,
+    bind: '127.0.0.1',
+    auth: {
+      username: '',
+      password: '',
+    },
   },
   provider: {
     vps8: {

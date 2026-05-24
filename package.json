@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "tsdown",
-    "dev": "tsdown --watch --onSuccess \"node --env-file-if-existsfile .env.local ./dist/index.mjs\"",
+    "dev": "tsdown --watch --onSuccess \"node --env-file .env.local ./dist/index.mjs\"",
     "start": "node ./dist/index.mjs",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
@@ -34,7 +34,6 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.0.3",
-    "cac": "^7.0.0",
     "hono": "^4.12.22",
     "obug": "^2.1.1",
     "smol-toml": "^1.6.1"

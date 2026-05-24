@@ -1,6 +1,10 @@
-# tsdown-starter
+# Lego-Httpreq-Provider
 
-A starter for creating a TypeScript package.
+An [httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html) DNS Provider of [Lego](https://go-acme.github.io/lego/) ACME client.
+
+## TODO
+- [x] default mode 
+- [ ] Raw mode
 
 ## Development
 

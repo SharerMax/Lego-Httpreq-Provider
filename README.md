@@ -4,7 +4,7 @@ An [httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html) DNS Provider
 
 ## TODO
 - [x] default mode 
-- [ ] Raw mode
+- [x] Raw mode
 
 ## Development
 

@@ -13,49 +13,32 @@ class DnsheProvider extends BaseProvider {
   }
 
   parseDomainInfo(fqdn: string) {
-    // _acme-challenge.domain
-    // _acme-challenge.**.**.domain
-    const normalizedFqdn = fqdn.endsWith('.') ? fqdn.slice(0, -1) : fqdn
-    const splitFqdn = normalizedFqdn.split('.')
-
-    return ({
+    const splitFqdn = fqdn.split('.')
+    const domainInfo = {
       domain: splitFqdn.slice(-3).join('.'), // three levels
       host: splitFqdn.slice(0, -3).join('.'),
-    })
-  }
-
-  async present(payload: Payload) {
-    dnsheLogger('present', payload)
-    if (isDefaultModePayload(payload)) {
-      const domainInfo = this.parseDomainInfo(payload.fqdn)
-      const result = await this.dnsheApiClient.presentChallengeRecord(domainInfo.domain, domainInfo.host, payload.value)
-      dnsheLogger(result)
+    }
+    if (domainInfo.host === '') {
+      domainInfo.host = '_acme-challenge'
     }
     else {
-      const vaule = crypto.createHash('sha256').update(payload.keyAuth).digest('base64url')
-      const domainInfo = this.parseDomainInfo(payload.domain)
-      if (domainInfo.host === '') {
-        domainInfo.host = '_acme-challenge'
-      }
-      else {
-        domainInfo.host = `_acme-challenge.${domainInfo.host}`
-      }
-      const result = await this.dnsheApiClient.presentChallengeRecord(domainInfo.domain, ['_acme-challenge', domainInfo.host].join('.'), vaule)
-      dnsheLogger(result)
+      domainInfo.host = `_acme-challenge.${domainInfo.host}`
     }
+    return domainInfo
   }
 
-  async cleanup(payload: Payload) {
-    dnsheLogger('cleanup', payload)
-    if (isDefaultModePayload(payload)) {
-      const domainInfo = this.parseDomainInfo(payload.fqdn)
-      const result = await this.dnsheApiClient.cleanupChallengeRecord(domainInfo.domain, domainInfo.host)
-      dnsheLogger(result)
-    }
-    else {
-      const result = await this.dnsheApiClient.cleanupChallengeRecord(payload.domain, '_acme-challenge')
-      dnsheLogger(result)
-    }
+  async present(domain: string, value: string): Promise<void> {
+    dnsheLogger('present', domain, value)
+    const domainInfo = this.parseDomainInfo(domain)
+    const result = await this.dnsheApiClient.presentChallengeRecord(domainInfo.domain, domainInfo.host, value)
+    dnsheLogger(result)
+  }
+
+  async cleanup(domain: string, value: string): Promise<void> {
+    dnsheLogger('cleanup', domain, value)
+    const domainInfo = this.parseDomainInfo(domain)
+    const result = await this.dnsheApiClient.cleanupChallengeRecord(domainInfo.domain, domainInfo.host)
+    dnsheLogger(result)
   }
 }
 

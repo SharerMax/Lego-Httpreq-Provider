@@ -1,3 +1,5 @@
+import BaseApiClient from '../internal/base-api'
+
 const DNS_RECORD_BASE_API_URL = 'https://api005.dnshe.com/index.php?m=domain_hub&endpoint=dns_records&'
 const SUBDOMAIN_RECORD_BASE_API_URL = 'https://api005.dnshe.com/index.php?m=domain_hub&endpoint=subdomains&'
 
@@ -53,9 +55,10 @@ interface DeleteRecordResponse extends ApiResponse {
   message: string
 }
 
-class DnsheApiClient {
+class DnsheApiClient extends BaseApiClient {
   private authHeader: Record<string, string>
   constructor(apiKey: string, apiSecret: string) {
+    super()
     this.authHeader = {
       'X-API-Key': apiKey,
       'X-API-Secret': apiSecret,
@@ -134,33 +137,29 @@ class DnsheApiClient {
   async presentChallengeRecord(subdomain: string, name: string, token: string) {
     const subdomainRecord = (await this.listSubdomains(subdomain)).subdomains.find(subdomainRecord => `${subdomainRecord.subdomain}.${subdomainRecord.rootdomain}` === subdomain)
     if (!subdomainRecord) {
-      throw new Error('Subdomain not found')
+      return false
     }
     const dnsRecord = (await this.listRecord(subdomainRecord.id)).records.find(record => record.name === `${name}.${subdomain}`)
     if (!dnsRecord) {
-      return this.createRecord(subdomainRecord.id, name, 'TXT', token, 300)
+      await this.createRecord(subdomainRecord.id, name, 'TXT', token, 300)
     }
     else {
-      return this.updateRecord(dnsRecord.id, 'TXT', token, 300)
+      await this.updateRecord(dnsRecord.id, 'TXT', token, 300)
     }
+    return true
   }
 
   async cleanupChallengeRecord(subdomain: string, name: string) {
     const subdomainRecord = (await this.listSubdomains(subdomain)).subdomains.find(subdomainRecord => `${subdomainRecord.subdomain}.${subdomainRecord.rootdomain}` === subdomain)
     if (!subdomainRecord) {
-      return {
-        success: true,
-        message: 'Subdomain not found or already deleted',
-      }
+      return true
     }
     const dnsRecord = (await this.listRecord(subdomainRecord.id)).records.find(record => record.name === `${name}.${subdomain}`)
     if (!dnsRecord) {
-      return {
-        success: true,
-        message: 'Record not found or already deleted',
-      }
+      return true
     }
     await this.deleteRecord(dnsRecord.id)
+    return true
   }
 }
 

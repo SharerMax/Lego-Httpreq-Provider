@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer'
 import logger from '@/log'
+import BaseApiClient from '../internal/base-api'
 
 const API_URL = 'https://vps8.zz.cd/api/client/dnsopenapi'
 export type RECORD_TYPE = 'A' | 'AAAA' | 'CNAME' | 'MX' | 'TXT' | 'NS'
@@ -28,9 +29,10 @@ interface DomainListItem {
   expires_at: string
 }
 
-class Vps8ApiClient {
+class Vps8ApiClient extends BaseApiClient {
   private basicAuth: string
   constructor(userName: string, password: string) {
+    super()
     this.basicAuth = Buffer.from(`${userName}:${password}`).toString('base64')
   }
 
@@ -140,16 +142,16 @@ class Vps8ApiClient {
     if (challengeRecord === undefined) {
       const newRecord = (await this.createRecord(domain, host, 'TXT', token, 300))?.record
       if (!newRecord) {
-        throw new Error('Failed to create record')
+        return false
       }
-      return newRecord
+      return true
     }
     else {
       const newRecord = (await this.updateRecord(domain, challengeRecord.id, token, 300))?.record
       if (!newRecord) {
-        throw new Error('Failed to update record')
+        return false
       }
-      return newRecord
+      return true
     }
   }
 
@@ -161,11 +163,11 @@ class Vps8ApiClient {
     if (challengeRecord) {
       const result = (await this.deleteRecord(domain, challengeRecord.id))
       if (!result) {
-        throw new Error('Failed to delete record')
+        return false
       }
-      return result
+      return true
     }
-    return { domain, ok: true, delete_id: 0 }
+    return true
   }
 }
 

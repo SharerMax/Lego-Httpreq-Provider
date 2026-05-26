@@ -20,6 +20,14 @@ interface DNSRecord {
   value: string
 }
 
+interface DomainListItem {
+  domain: string
+  platform_type: string
+  source_service: string
+  created_at: string
+  expires_at: string
+}
+
 class Vps8ApiClient {
   private basicAuth: string
   constructor(userName: string, password: string) {
@@ -38,6 +46,19 @@ class Vps8ApiClient {
       throw new Error(response.error.message)
     }
     return response.result
+  }
+
+  async listDomains() {
+    vps8ApiLogger.log('listDomains')
+    const response = await fetch(`${API_URL}/domain_list`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${this.basicAuth}`,
+      },
+    }).then(res => res.json())
+    vps8ApiLogger.log('listDomains response', response)
+    return this.toResult<DomainListItem[]>(response)
   }
 
   async listRecords(domain: string) {

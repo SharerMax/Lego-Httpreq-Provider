@@ -11,12 +11,18 @@ class TowLeveCommonProvider extends BaseProvider {
 
   async present(domain: string, value: string): Promise<void> {
     const domainInfo = generateChallengeDomain(domain, 3)
-    await this.apiClient.presentChallengeRecord(domainInfo.domain, domainInfo.host, value)
+    const result = await this.apiClient.presentChallengeRecord(domainInfo.domain, domainInfo.host, value)
+    if (!result) {
+      throw new Error('present challenge record failed')
+    }
   }
 
   async cleanup(domain: string, _: string): Promise<void> {
     const domainInfo = generateChallengeDomain(domain, 3)
-    await this.apiClient.cleanupChallengeRecord(domainInfo.domain, domainInfo.host)
+    const result = await this.apiClient.cleanupChallengeRecord(domainInfo.domain, domainInfo.host)
+    if (!result) {
+      throw new Error('cleanup challenge record failed')
+    }
   }
 }
 

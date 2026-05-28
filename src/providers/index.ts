@@ -16,6 +16,9 @@ export function hasProvider(providerName: string): providerName is ProviderName 
   return providerName in providers
 }
 export function getProvider<P extends ProviderName>(providerName: P, providersConfig: Config['provider']): BaseProvider {
+  if (providersConfig[providerName].enable !== true) {
+    throw new Error(`Provider ${providerName} is disabled`)
+  }
   if (!hasProvider(providerName))
     throw new Error(`Provider ${providerName} not found`)
   if (cachedProviders[providerName])

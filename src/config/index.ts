@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import { merge } from 'es-toolkit'
 import { parse } from 'smol-toml'
 import logger from '@/log'
 
@@ -15,10 +16,12 @@ const defaultConfig = {
   },
   provider: {
     vps8: {
+      enable: false,
       username: '',
       password: '',
     },
     dnshe: {
+      enable: false,
       apiKey: '',
       apiSecret: '',
     },
@@ -31,7 +34,7 @@ export function loadConfig(path: string): Config {
   configLogger(`Loading config from ${path}`)
   // read config file
   const configContent = fs.readFileSync(path, 'utf-8')
-  const config = Object.assign({}, defaultConfig, parse(configContent))
+  const config = merge(defaultConfig, parse(configContent))
 
   configLogger('Config loaded')
   configLogger(config)

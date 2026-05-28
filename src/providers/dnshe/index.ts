@@ -8,14 +8,14 @@ class DnsheProvider extends TowLeveCommonProvider {
     super(new DnsheApiClient(apiKey, apiSecret))
   }
 
-  async present(domain: string, value: string): Promise<void> {
+  async present(domain: string, value: string) {
     dnsheLogger('present', domain, value)
-    super.present(domain, value)
+    await super.present(domain, value)
   }
 
-  async cleanup(domain: string, value: string): Promise<void> {
+  async cleanup(domain: string, value: string) {
     dnsheLogger('cleanup', domain, value)
-    super.cleanup(domain, value)
+    await super.cleanup(domain, value)
   }
 }
 

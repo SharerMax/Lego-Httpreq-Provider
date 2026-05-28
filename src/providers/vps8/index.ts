@@ -10,14 +10,14 @@ class Vps8Provide extends TowLeveCommonProvider {
     super(new Vps8ApiClient(username, password))
   }
 
-  async present(domain: string, value: string): Promise<void> {
+  async present(domain: string, value: string) {
     vps8Logger('present', domain, value)
-    super.present(domain, value)
+    await super.present(domain, value)
   }
 
-  async cleanup(domain: string, value: string): Promise<void> {
+  async cleanup(domain: string, value: string) {
     vps8Logger('cleanup', domain, value)
-    super.cleanup(domain, value)
+    await super.cleanup(domain, value)
   }
 }
 

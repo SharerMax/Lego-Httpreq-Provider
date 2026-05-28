@@ -7,9 +7,11 @@ username = "user"
 password = "password"
 
 [provider.vps8]
+enable = true
 username = "***"
 password = "***"
 
 [provider.dnshe]
+enable = true
 apiKey = "***"
 apiSecret = "***"

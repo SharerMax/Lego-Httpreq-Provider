@@ -65,6 +65,7 @@ app.post('/:providerName/cleanup', sValidator('json', payloadSchema), sValidator
   await provider.cleanup(challengeInfo.domain, challengeInfo.value)
   return c.text('success')
 })
+
 serve({
   port: config.server.port,
   hostname: config.server.bind,

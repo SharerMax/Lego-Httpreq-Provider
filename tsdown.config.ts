@@ -6,6 +6,8 @@ export default defineConfig({
   },
   exports: true,
   copy: [
+    { from: 'package.json', to: 'dist' },
+    { from: 'pnpm-lock.yaml', to: 'dist' },
     { from: 'examples/config.toml', to: 'dist' },
   ],
 

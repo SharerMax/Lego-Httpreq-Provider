@@ -1,6 +1,7 @@
 import type BaseProvider from './internal/base'
 import type { Config } from '@/config'
 import DnsheProvider from './dnshe'
+import LocalhostccProvider from './localhostcc'
 import Vps8Provide from './vps8'
 
 export type ProviderName = keyof Config['provider']
@@ -10,6 +11,7 @@ export type Providers = {
 export const providers: Providers = {
   vps8: (vps8Confg: Config['provider']['vps8']) => new Vps8Provide(vps8Confg.username, vps8Confg.password),
   dnshe: (dnsheConfig: Config['provider']['dnshe']) => new DnsheProvider(dnsheConfig.apiKey, dnsheConfig.apiSecret),
+  localhostcc: (localhostccConfig: Config['provider']['localhostcc']) => new LocalhostccProvider(localhostccConfig.apiKey),
 }
 const cachedProviders: Partial<Record<ProviderName, BaseProvider>> = {}
 export function hasProvider(providerName: string): providerName is ProviderName {

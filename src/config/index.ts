@@ -25,6 +25,10 @@ const defaultConfig = {
       apiKey: '',
       apiSecret: '',
     },
+    localhostcc: {
+      enable: false,
+      apiKey: '',
+    },
   },
 }
 

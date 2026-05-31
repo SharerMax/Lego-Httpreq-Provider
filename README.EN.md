@@ -1,27 +1,25 @@
-【中文简体/[English](./README.EN.md)】
-
-
+[[中文简体](./README.md)/English]
 # Lego-Httpreq-Provider
 
-> 一个基于 [Lego](https://go-acme.github.io/lego/) ACME 客户端的 [httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html) DNS Provider 实现。
+> An [httpreq](https://go-acme.github.io/lego/dns/httpreq/index.html) DNS Provider implementation for the [Lego](https://go-acme.github.io/lego/) ACME client.
 
-## ✨ 特性
+## ✨ Features
 
-- ✅ 支持 Default Mode
-- ✅ 支持 Raw Mode
-- 🔌 多 DNS 服务商支持
+- ✅ Default Mode support
+- ✅ Raw Mode support
+- 🔌 Multiple DNS provider integrations
 
-## 📦 支持的 DNS 服务商
+## 📦 Supported DNS Providers
 
-| 服务商 | 链接 |
-| :--- | :--- |
-| VPS8 | [https://vps8.zz.cd](https://vps8.zz.cd) |
-| DNSHE | [https://www.dnshe.com](https://www.dnshe.com) |
-| Localhost.cc | [https://localhost.cc](https://localhost.cc) |
+| Provider     | Website                    |
+| :----------- | :------------------------- |
+| VPS8         | https://vps8.zz.cd         |
+| DNSHE        | https://www.dnshe.com      |
+| Localhost.cc | https://localhost.cc       |
 
-## ⚙️ 配置说明
+## ⚙️ Configuration
 
-在项目根目录创建或修改配置文件：
+Create or edit the configuration file in the project root directory:
 
 ```toml
 # config.toml
@@ -48,17 +46,18 @@ enable = true
 apiKey = "***"
 ```
 
-## 💻 环境变量
-| 变量 | 值 |
+## 💻 Environment Variables
+| Variable | Value |
 | :--- | :--- |
 | DEBUG | LRP:\* |
-| LRP_CONFIG_FILE | 配置文件路径，如：`custom.toml` |
+| LRP_CONFIG_FILE | config file path. eg: `custom.toml` |
 
-## 🚀 API 接口
+## 🚀 API Endpoints
 
-### Present (添加解析记录)
+### Present (Add DNS Record)
 
 **Default Mode**
+
 ```bash
 curl -sS -u "user:password" \
   -H "Content-Type: application/json" \
@@ -70,6 +69,7 @@ curl -sS -u "user:password" \
 ```
 
 **Raw Mode**
+
 ```bash
 curl -sS -u "user:password" \
   -H "Content-Type: application/json" \
@@ -81,9 +81,10 @@ curl -sS -u "user:password" \
   }'
 ```
 
-### Cleanup (清理解析记录)
+### Cleanup (Remove DNS Record)
 
 **Default Mode**
+
 ```bash
 curl -sS -u "user:password" \
   -H "Content-Type: application/json" \
@@ -95,6 +96,7 @@ curl -sS -u "user:password" \
 ```
 
 **Raw Mode**
+
 ```bash
 curl -sS -u "user:password" \
   -H "Content-Type: application/json" \
@@ -106,20 +108,20 @@ curl -sS -u "user:password" \
   }'
 ```
 
-## 🛠️ 开发指南
+## 🛠️ Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 pnpm install
 
-# 启动开发环境
+# Start development server
 pnpm run dev
 
-# 构建生产版本
+# Build for production
 pnpm run build
 
-# 启动生产服务
+# Start production server
 pnpm run start
 ```
 
-## 📄 许可证
+## 📄 License

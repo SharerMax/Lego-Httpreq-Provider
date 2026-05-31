@@ -15,3 +15,7 @@ password = "***"
 enable = true
 apiKey = "***"
 apiSecret = "***"
+
+[provider.localhostcc]
+enable = true
+apiKey = "***"
